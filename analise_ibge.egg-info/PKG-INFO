@@ -1,0 +1,8 @@
+Metadata-Version: 2.4
+Name: analise_ibge
+Version: 0.1
+Requires-Dist: pandas
+Requires-Dist: streamlit
+Requires-Dist: pytest
+Requires-Dist: pytest-cov
+Dynamic: requires-dist
