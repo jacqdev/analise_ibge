@@ -1,0 +1,24 @@
+import pandas as pd
+import pytest
+import src.coleta as coleta
+
+def test_carregar_csv(tmp_path):
+    # cria um CSV temporário válido
+    arquivo = tmp_path / "teste.csv"
+    pd.DataFrame({"Ano":[2020], "Renda_media":[2000]}).to_csv(arquivo, index=False)
+
+    df = coleta.carregar_csv(arquivo)
+    assert "ano" in df.columns
+    assert "renda_media" in df.columns
+
+def test_carregar_csv_arquivo_inexistente():
+    # força FileNotFoundError
+    with pytest.raises(FileNotFoundError):
+        coleta.carregar_csv("arquivo_inexistente.csv")
+
+def test_carregar_csv_erro_runtime(tmp_path):
+    # cria um arquivo vazio para forçar erro de leitura
+    arquivo = tmp_path / "invalido.csv"
+    arquivo.write_text("")  # arquivo sem conteúdo
+    with pytest.raises(RuntimeError):
+        coleta.carregar_csv(arquivo)
